@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import SignIn from "../Pages/Auth/SignIn";
 import SignUp from "../Pages/Auth/SignUp";
 import MainLayout from "../Layout/MainLayout";
-import Home from "../Pages/Home";
+import FormAuth from "../Pages/Auth/FormAuth";
 
 export default createBrowserRouter([
     {
@@ -11,13 +11,13 @@ export default createBrowserRouter([
         element:<MainLayout/>,
         children:[
             {
-                path:'/',
-                element:<Home/>
+                path:'/signin',
+                element:<FormAuth  type={"Sign-in"}/>
+            },
+            {
+                path:'/signup',
+                element:<FormAuth type={"Sign-up"}/>
             }
         ]
-    },
-    {
-        path:'/signup',
-        element:<SignUp/>
     }
 ])

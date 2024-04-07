@@ -13,7 +13,7 @@ const Navbar = () => {
           <img src={logo} alt="" />
         </Link>
         <div
-          className={`absolute bg-red-500 w-full left-0 top-full mt-0.5 border-b border-grey py-3 px-[5vw] md:border-0  md:block md:relative md:top-0 md:p-0  md:insert-0 md:w-auto md:show ${
+          className={`absolute w-full left-0 top-full mt-0.5 border-b border-grey py-3 px-[5vw] md:border-0  md:block md:relative md:top-0 md:p-0  md:insert-0 md:w-auto md:show ${
             togglSearch ? "show" : "hide"
           }`}
         >
@@ -22,7 +22,7 @@ const Navbar = () => {
             placeholder="Search"
             className="w-full md:w-auto bg-grey p-3 pl-6 pr-[12%] md:pr-6 rounded-full placeholder:text-gray-500 md:pl-12"
           />
-          <IoIosSearch className="absolute md:pointer-events-none md:left-5 right-[10%] top-[50%] -translate-y-1/2 text-xl text-grey" />
+          <IoIosSearch className="absolute md:pointer-events-none md:left-5 right-[10%] top-[50%] -translate-y-1/2 text-xl" />
         </div>
 
         <div className=" flex items-center gap-3 ml-auto">
@@ -32,14 +32,17 @@ const Navbar = () => {
           >
             <IoIosSearch className="text-xl" />
           </button>
-          <Link to="/editor" className="hidden md:flex justify-center items-center gap-2 link">
-            <LuPenSquare/>
+          <Link
+            to="/editor"
+            className="hidden md:flex justify-center items-center gap-2 link"
+          >
+            <LuPenSquare />
             <i>Write</i>
           </Link>
-          <Link className="btn-dark py-2" to='/signin'>
+          <Link className="btn-dark py-2" to="/signin">
             Sign In
           </Link>
-          <Link className="btn-dark py-2 hidden md:block" to='/signup'>
+          <Link className="btn-light py-2 hidden md:block" to="/signup">
             Sign Up
           </Link>
         </div>
