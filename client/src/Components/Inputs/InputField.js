@@ -22,7 +22,7 @@ const InputField = ({ id, name, type, placeholder, value, icons }) => {
           onClick={() => setPasswordVisible((currentVal) => !currentVal)}
           className="input-icon left-[auto] right-5 cursor-pointer"
         >
-          {passwordVisible ? <HiOutlineEyeSlash /> : <IoEyeOutline />}
+          {passwordVisible ?  <IoEyeOutline /> : <HiOutlineEyeSlash /> }
         </span>
       )}
       </div>
