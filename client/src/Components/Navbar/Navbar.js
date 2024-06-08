@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../Asserts/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import { LuPenSquare } from "react-icons/lu";
 
 const Navbar = () => {
   const [togglSearch, setToggleSearch] = useState(false);
+  const location = useLocation();
+  // console.log(location);
+
   return (
     <>
       <nav className="navbar">
@@ -13,9 +16,8 @@ const Navbar = () => {
           <img src={logo} alt="" />
         </Link>
         <div
-          className={`absolute w-full left-0 top-full mt-0.5 border-b border-grey py-3 px-[5vw] md:border-0  md:block md:relative md:top-0 md:p-0  md:insert-0 md:w-auto md:show ${
-            togglSearch ? "show" : "hide"
-          }`}
+          className={`absolute w-full left-0 top-full mt-0.5 border-b border-grey py-3 px-[5vw] md:border-0  md:block md:relative md:top-0 md:p-0  md:insert-0 md:w-auto md:show ${togglSearch ? "show" : "hide"
+            }`}
         >
           <input
             type="text"
@@ -39,10 +41,10 @@ const Navbar = () => {
             <LuPenSquare />
             <i>Write</i>
           </Link>
-          <Link className="btn-dark py-2" to="/signin">
+          <Link className={`py-2 ${location.pathname === "/signin" ? "btn-dark" : "btn-light"}`} to="/signin">
             Sign In
           </Link>
-          <Link className="btn-light py-2 hidden md:block" to="/signup">
+          <Link className={`py-2 hidden md:block ${location.pathname === '/signup' ? "btn-dark" : "btn-light"}`} to="/signup">
             Sign Up
           </Link>
         </div>

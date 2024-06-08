@@ -3,7 +3,7 @@ import { comparepassword, hashpassword } from "../Utils/Auth.js";
 import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w)*(\.\w{2,3})+$/; // username@domain.extension
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 
 // generate username
@@ -87,17 +87,17 @@ export const signinUser = async (req, res, next) => {
       if (!hashpasswordComp) {
         return res.status(403).json({ error: "Invalid Password" });
       }
-      const access_token =  jwt.sign(
+      const access_token = jwt.sign(
         { id: user._id },
         process.env.SECRET_ACCESS_KEY
       );
       const { personal_info: { password: excludedPassword, ...personalInfoWithoutPassword }, ...rest } = user._doc;
       const userWithoutPassword = {
-          personal_info: personalInfoWithoutPassword,
+        personal_info: personalInfoWithoutPassword,
         ...rest
       };
-    //   return res.status(200).json(userWithoutPassword,access_token);
-    return res.status(200).json({access_token, user: userWithoutPassword });
+      //   return res.status(200).json(userWithoutPassword,access_token);
+      return res.status(200).json({ access_token, user: userWithoutPassword });
     }
   } catch (err) {
     console.log(err.message);

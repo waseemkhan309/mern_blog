@@ -4,10 +4,13 @@ import connectionDb from './Config/Db.js';
 import dotenv from "dotenv";
 dotenv.config();
 import AuthRoute from './Route/AuthRoute.js'
+import cors from 'cors'
 const port = process.env.PORT || 4000
+
 connectionDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 app.use('/user',AuthRoute)
 
 // middleware error handler
