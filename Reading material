@@ -1,0 +1,1 @@
+# signUp API --> get data from body , bcryptjs - use for hashing password , jwt - jsonwebtoken
