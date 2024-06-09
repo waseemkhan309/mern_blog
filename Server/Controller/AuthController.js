@@ -87,17 +87,27 @@ export const signinUser = async (req, res, next) => {
       if (!hashpasswordComp) {
         return res.status(403).json({ error: "Invalid Password" });
       }
-      const access_token = jwt.sign(
+      // Generate access token
+      const accessToken = jwt.sign(
         { id: user._id },
-        process.env.SECRET_ACCESS_KEY
+        process.env.SECRET_ACCESS_KEY,
+        { expiresIn: '15m' } // Set appropriate expiration
       );
+
+      // Generate refresh token
+      const refreshToken = jwt.sign(
+        { id: user._id },
+        process.env.REFRESH_ACCESS_KEY,
+        { expiresIn: '7d' } // Set appropriate expiration
+      );
+
       const { personal_info: { password: excludedPassword, ...personalInfoWithoutPassword }, ...rest } = user._doc;
       const userWithoutPassword = {
         personal_info: personalInfoWithoutPassword,
         ...rest
       };
       //   return res.status(200).json(userWithoutPassword,access_token);
-      return res.status(200).json({ access_token, user: userWithoutPassword });
+      return res.status(200).json({ status: "success", message: "User successfully login!", data: { refresh_Token: refreshToken, access_Token: accessToken, user: userWithoutPassword } });
     }
   } catch (err) {
     console.log(err.message);

@@ -13,19 +13,19 @@ const FormAuth = ({ type }) => {
   const authForm = useRef();
 
   // userAuthThroughServer function
-  const userAuthThroughServer = (serverRoute, formData) =>{
-    axios.post(process.env.REACT_APP_SERVER_DOMAIN + serverRoute,formData)
-    .then(({ data })=>{
-      console.log(data)
-    })
-    .catch((error)=>{
-      toast.error(error.message)
-    })
+  const userAuthThroughServer = (serverRoute, formData) => {
+    axios.post(process.env.REACT_APP_SERVER_DOMAIN + serverRoute, formData)
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let serverRoute = type == 'sign-in' ? "/signup": "/signin";
+    let serverRoute = type === 'sign-in' ? "/signup" : "/signin";
 
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w)*(\.\w{2,3})+$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
@@ -35,25 +35,25 @@ const FormAuth = ({ type }) => {
       formData[key] = value;
     }
 
-    const {fullname, email, password} = formData;
-//  form Validation
+    const { fullname, email, password } = formData;
+    //  form Validation
     if (fullname?.length < 3) {
-      return toast.error( "Full Name must be at least 3 characters long" );
+      return toast.error("Full Name must be at least 3 characters long");
     }
 
     if (!email?.length) {
-      return toast.error("Email is required" );
+      return toast.error("Email is required");
     }
 
     if (!emailRegex.test(email)) {
-      return toast.error("Email is Invalid" );
+      return toast.error("Email is Invalid");
     }
 
     if (!passwordRegex.test(password)) {
-      return toast.error("Password should be 6 to 20 characters long with a numeric , 1 lowerCase and 1 upperCase letters" );
+      return toast.error("Password should be 6 to 20 characters long with a numeric , 1 lowerCase and 1 upperCase letters");
     }
 
-    userAuthThroughServer(serverRoute,formData)
+    userAuthThroughServer(serverRoute, formData)
   };
 
   return (
