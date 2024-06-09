@@ -4,28 +4,49 @@ import { FaRegUser } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { TfiEmail } from "react-icons/tfi";
 import googleIcon from "../../Asserts/google.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import AnimationWrapper from "../../Components/Animation/AnimationWrapper";
 import toast from "react-hot-toast";
-import axios from "axios";
+import { signInAction, signUpAction } from "../../Redux/Actions/authAction";
 
 const FormAuth = ({ type }) => {
   const authForm = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   // userAuthThroughServer function
   const userAuthThroughServer = (serverRoute, formData) => {
-    axios.post(process.env.REACT_APP_SERVER_DOMAIN + serverRoute, formData)
-      .then(({ data }) => {
-        console.log(data)
+    // console.log("serverRoute--", serverRoute);
+    // console.log("formData--", formData);
+    if (serverRoute === '/signup') {
+      dispatch(signUpAction({ serverRoute, formData })).then((response) => {
+        // console.log("user--", response);
+        if (response.data.status === 'success') {
+          navigate('/signin')
+        }
+      }).catch((error) => {
+        console.log("Error in ", error);
+        toast.error(error.response.data.error)
       })
-      .catch((error) => {
-        toast.error(error.message)
+    } else {
+      // signinUser 
+      dispatch(signInAction({ serverRoute, formData })).then((response) => {
+        console.log(response);
+        dispatch({
+          type: "USER_LOGIN",
+          payload: response.data,
+        })
+        // then move user to login
+      }).catch((error) => {
+        console.log("error in Signin user", error);
       })
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let serverRoute = type === 'sign-in' ? "/signup" : "/signin";
+    let serverRoute = type === 'Sign-in' ? "/signin" : "/signup";
 
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w)*(\.\w{2,3})+$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;

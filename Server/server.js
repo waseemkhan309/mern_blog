@@ -4,6 +4,7 @@ import connectionDb from './Config/Db.js';
 import dotenv from "dotenv";
 dotenv.config();
 import AuthRoute from './Route/AuthRoute.js'
+import profRoute from './Route/profRoute.js'
 import cors from 'cors'
 const port = process.env.PORT || 4000
 
@@ -11,10 +12,11 @@ connectionDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
-app.use('/user',AuthRoute)
+app.use('/user', AuthRoute)
+app.use('/user', profRoute)
 
 // middleware error handler
-app.use((err,req,res,next) => {
+app.use((err, req, res, next) => {
     const statusCode = res.statusCode || 500;
     const message = res.message || "Internal Server Error";
     res.status(statusCode).json({
@@ -24,6 +26,6 @@ app.use((err,req,res,next) => {
     })
 })
 
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`listening on port ${port}`)
 })

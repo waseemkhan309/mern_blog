@@ -17,7 +17,6 @@ const generateUsername = async (email) => {
 };
 
 const formatDatatoToSend = (user) => {
-  console.log(user);
   return {
     profile_img: user.personal_info.profile_img,
     username: user.personal_info.username,
@@ -25,6 +24,8 @@ const formatDatatoToSend = (user) => {
   };
 };
 
+// signIn API
+// post method  
 export const signupUser = async (req, res, next) => {
   try {
     const { fullname, email, password } = req.body;
@@ -56,7 +57,7 @@ export const signupUser = async (req, res, next) => {
       .save()
       .then((u) => {
         // return res.status(200).json({user:u});
-        return res.status(200).json(formatDatatoToSend(u));
+        return res.status(200).json({ status: "success", data: formatDatatoToSend(u), message: "Successfully user register" });
       })
       .catch((err) => {
         if (err.code == "11000") {
@@ -71,6 +72,8 @@ export const signupUser = async (req, res, next) => {
   }
 };
 
+// signIn API
+// post method  
 export const signinUser = async (req, res, next) => {
   try {
     let { email, password } = req.body;
@@ -83,7 +86,7 @@ export const signinUser = async (req, res, next) => {
         password,
         user.personal_info.password
       );
-      console.log("hashpasswordComp", hashpasswordComp);
+      // console.log("hashpasswordComp", hashpasswordComp);
       if (!hashpasswordComp) {
         return res.status(403).json({ error: "Invalid Password" });
       }
@@ -114,3 +117,9 @@ export const signinUser = async (req, res, next) => {
     return res.status(500).json({ "error": err.message });
   }
 };
+
+// get userData API
+// get
+export const getUserData = (req, res, next) => {
+
+}
