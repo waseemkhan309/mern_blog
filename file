@@ -1,4 +1,4 @@
 # https://www.linkedin.com/pulse/authentication-using-jwt-accesstoken-refreshtoken-nodejs-keshwani-jxjaf/
 # signUp API --> get data from body , bcryptjs - use for hashing password , jwt - jsonwebtoken
-api for getting profile data 
-how to authentication user
+-> api for getting profile data & refreshToken 
+-> how to authentication user
