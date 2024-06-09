@@ -3,11 +3,13 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import FormAuth from "../Pages/Auth/FormAuth";
 import Editor from "../Pages/Editor";
+import PrivateRoute from "./PrivateRoute";
+import RedirectRoute from "./RedirectRoute";
 
 export default createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout />,
+        element: (<PrivateRoute> <MainLayout /> </PrivateRoute>),
         children: [
             {
                 path: '/signin',
@@ -21,6 +23,6 @@ export default createBrowserRouter([
     },
     {
         path: '/editor',
-        element: <Editor />
+        element: (<RedirectRoute><Editor /></RedirectRoute>)
     }
 ])

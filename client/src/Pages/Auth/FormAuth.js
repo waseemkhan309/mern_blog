@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import AnimationWrapper from "../../Components/Animation/AnimationWrapper";
 import toast from "react-hot-toast";
 import { signInAction, signUpAction } from "../../Redux/Actions/authAction";
+import { setToken } from "../../utils/Token";
 
 const FormAuth = ({ type }) => {
   const authForm = useRef();
@@ -17,26 +18,27 @@ const FormAuth = ({ type }) => {
 
   // userAuthThroughServer function
   const userAuthThroughServer = (serverRoute, formData) => {
-    // console.log("serverRoute--", serverRoute);
-    // console.log("formData--", formData);
     if (serverRoute === '/signup') {
       dispatch(signUpAction({ serverRoute, formData })).then((response) => {
-        // console.log("user--", response);
         if (response.data.status === 'success') {
           navigate('/signin')
+          toast.success("User register successfully")
         }
       }).catch((error) => {
-        console.log("Error in ", error);
+        console.log("Error in signUp ", error);
         toast.error(error.response.data.error)
       })
     } else {
       // signinUser 
       dispatch(signInAction({ serverRoute, formData })).then((response) => {
-        console.log(response);
+        setToken("accessToken", response.data.data.access_Token);
+        setToken("refreshToken", response.data.data.refresh_Token);
+        // console.log(response);
         dispatch({
           type: "USER_LOGIN",
           payload: response.data,
         })
+        navigate('/editor')
         // then move user to login
       }).catch((error) => {
         console.log("error in Signin user", error);

@@ -3,17 +3,25 @@ const app = express();
 import connectionDb from './Config/Db.js';
 import dotenv from "dotenv";
 dotenv.config();
+import cors from 'cors';
+
+// routes
 import AuthRoute from './Route/AuthRoute.js'
-import profRoute from './Route/profRoute.js'
-import cors from 'cors'
 const port = process.env.PORT || 4000
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable CORS with credentials
+    // optionsSuccessStatus: 204 // Some legacy browsers choke on 204
+};
+
+// middlewares
 connectionDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors(corsOptions))
 app.use('/user', AuthRoute)
-app.use('/user', profRoute)
 
 // middleware error handler
 app.use((err, req, res, next) => {
